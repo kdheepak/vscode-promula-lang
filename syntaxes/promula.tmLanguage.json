@@ -1,0 +1,178 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "PROMULA",
+  "patterns": [{ "include": "#all_patterns" }],
+  "repository": {
+    "all_patterns": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#open-segment"
+        },
+        {
+          "include": "#define-program"
+        },
+        {
+          "include": "#define-variable"
+        },
+        {
+          "include": "#define-set"
+        },
+        {
+          "include": "#define-relation"
+        },
+        {
+          "include": "#numeric-constant"
+        },
+        {
+          "include": "#string-constant"
+        }
+      ]
+    },
+    "define-variable": {
+      "begin": "\\b(DEFINE\\b)\\s+(VARIABLE)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      },
+      "end": "\\b(END\\b)\\s+(VARIABLE)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      }
+    },
+    "define-set": {
+      "begin": "\\b(DEFINE\\b)\\s+(SET)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      },
+      "end": "\\b(END\\b)\\s+(SET)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      }
+    },
+    "define-relation": {
+      "begin": "\\b(DEFINE\\b)\\s+(RELATION)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      },
+      "end": "\\b(END\\b)\\s+(RELATION)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      }
+    },
+    "define-program": {
+      "begin": "\\b(DEFINE\\b)\\s+(PROGRAM)\\s+",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      },
+      "end": "\\b(END\\b)\\s+(PROGRAM)",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      },
+      "patterns": [
+        {
+          "include": "all_patterns"
+        }
+      ]
+    },
+    "open-segment": {
+      "match": "\\b(OPEN\\b)\\s+(SEGMENT)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      }
+    },
+    "comment": {
+      "comment": "Comment",
+      "name": "comment.line",
+      "match": "^\\s*\\*.*$"
+    },
+    "numeric-constant": {
+      "comment": "Numeric constants",
+      "name": "constant.numeric.promula",
+      "match": "(?ix)[\\+\\-]?(\\b\\d+\\.?\\d*|\\.\\d+) (_\\w+|d[\\+\\-]?\\d+|e[\\+\\-]?\\d+(_\\w+)?)?(?![a-z_])"
+    },
+    "string-constant": {
+      "patterns": [
+        {
+          "comment": "Double quote string",
+          "name": "string.quoted.double.include.promula",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.promula"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.promula"
+            }
+          }
+        },
+        {
+          "comment": "Single quote string",
+          "name": "string.quoted.single.include.promula",
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.promula"
+            }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.promula"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "scopeName": "source.promula"
+}

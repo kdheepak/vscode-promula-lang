@@ -1,0 +1,53 @@
+* this is a comment
+OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
+  DEFINE PROGRAM "A Demo Program"
+  DEFINE SET
+    month(12)       "Months of the Year"
+    acnt(3)         "Profit and Loss Ledger Accounts"
+  END SET
+
+  DEFINE VARIABLE
+    mp(month,acnt) "Monthly Profit and Loss Figures ($)" TYPE=REAL(10,0)
+    amp            "Average Monthly Profit ($)"          TYPE=REAL(10,2)
+    mn(month)      "Month Names"                         TYPE=STRING(12)
+    acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
+  END VARIABLE
+
+  DEFINE RELATION
+    ROW(month,mn)
+    COLUMN(acnt,acn)
+    KEY(acnt,acn)
+  END RELATION
+
+  READ mn
+  January
+  February
+  March
+  April
+  May
+  June
+  July
+  August
+  September
+  October
+  November
+  December
+
+  READ acn:6
+  Sales Costs Profit
+
+  DEFINE PROCEDURE profits
+    SELECT acnt(Sales)
+      WRITE"Please enter the monthly sales figures."
+      READ mp(acnt,month)
+    SELECT acnt(Costs)
+      WRITE"Please enter the monthly cost figures."
+      READ mp(acnt,month)
+    SELECT acnt*
+      mp(m,3) = mp(m,1) - mp(m,2)
+      amp = SUM(m)(mp(m,3)/12)
+      WRITE mp
+      WRITE amp
+  END PROCEDURE profits
+
+END PROGRAM, DO profits
