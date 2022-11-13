@@ -36,6 +36,15 @@ OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
   READ acn:6
   Sales Costs Profit
 
+  DEFINE PROCEDURE yesno
+    ASK "Do you wish to continue? (yes/no)", yes
+      WRITE("Continue")
+      yesno
+    ELSE no
+      WRITE("Stop")
+    END ask
+  END PROCEDURE yesno
+
   DEFINE PROCEDURE profits
     SELECT acnt(Sales)
       WRITE"Please enter the monthly sales figures."

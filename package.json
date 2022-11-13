@@ -2,6 +2,7 @@
   "name": "promula",
   "displayName": "PROMULA",
   "description": "Great Migrations PROMULA Application Development System ADS",
+  "repository": "https://github.com/kdheepak/vscode-promula-lang",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.73.0"
@@ -10,16 +11,29 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "promula",
-      "aliases": ["PROMULA", "promula"],
-      "extensions": [".prm",".src",".txt",".txp",".txo"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "promula",
-      "scopeName": "source.promula",
-      "path": "./syntaxes/promula.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "promula",
+        "aliases": [
+          "PROMULA",
+          "promula"
+        ],
+        "extensions": [
+          ".prm",
+          ".src",
+          ".txt",
+          ".txp",
+          ".txo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "promula",
+        "scopeName": "source.promula",
+        "path": "./syntaxes/promula.tmLanguage.json"
+      }
+    ]
   }
 }

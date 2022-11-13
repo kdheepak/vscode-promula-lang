@@ -9,19 +9,66 @@
           "include": "#comment"
         },
         {
+          "comment": "Language Constants.",
+          "match": "\\b(true|false|Inf|NegInf|NaN|nil)\\b",
+          "name": "constant.language.promula"
+        },
+        {
+          "comment": "Common functions",
+          "match": "\\b(SELECT|READ|WRITE)\\b",
+          "name": "keyword.other.common.function.promula"
+        },
+        {
+          "comment": "Function call.",
+          "match": "\\b\\w+\\b(?=(\\[([a-zA-Z0-9_,]|\\s)+\\])?\\()",
+          "name": "support.function.any-method.nim"
+        },
+        {
+          "comment": "Function call (no parenthesis).",
+          "match": "(?!(openarray|varargs|void|range|array|seq|set|pointer|new|await|assert|echo|defined|declared|newException|countup|countdown|high|low|((uint|int)(8|16|32|64)?)|float(32|64)?|bool|string|auto|cstring|char|byte|tobject|typedesc|stmt|expr|any|untyped|typed|addr|as|asm|atomic|bind|cast|const|converter|concept|defer|discard|distinct|div|enum|export|from|import|include|let|mod|mixin|object|of|ptr|ref|shl|shr|static|type|using|var|tuple|iterator|macro|func|method|proc|template|and|in|is|isnot|not|notin|or|xor|proc|method|template|macro|iterator|converter|func|true|false|Inf|NegInf|NaN|nil|block|break|case|continue|do|elif|else|end|except|finally|for|if|raise|return|try|when|while|yield)\\b)\\w+\\s+(?!(and|in|is|isnot|not|notin|or|xor|[^a-zA-Z0-9_\"'`(-+]+)\\b)(?=[a-zA-Z0-9_\"'`(-+])",
+          "name": "support.function.any-method.nim"
+        },
+        {
           "include": "#open-segment"
         },
         {
           "include": "#define-program"
         },
         {
+          "include": "#end-program"
+        },
+        {
           "include": "#define-variable"
+        },
+        {
+          "include": "#end-variable"
         },
         {
           "include": "#define-set"
         },
         {
+          "include": "#end-set"
+        },
+        {
+          "include": "#define-procedure"
+        },
+        {
+          "include": "#end-procedure"
+        },
+        {
           "include": "#define-relation"
+        },
+        {
+          "include": "#end-relation"
+        },
+        {
+          "include": "#ask"
+        },
+        {
+          "include": "#else"
+        },
+        {
+          "include": "#end"
         },
         {
           "include": "#numeric-constant"
@@ -31,18 +78,48 @@
         }
       ]
     },
+    "define-procedure": {
+      "match": "\\b(DEFINE\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        },
+        "3": {
+          "name": "entity.name.function.lua"
+        }
+      }
+    },
+    "end-procedure": {
+      "match": "\\b(END\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        },
+        "3": {
+          "name": "entity.name.function.lua"
+        }
+      }
+    },
     "define-variable": {
-      "begin": "\\b(DEFINE\\b)\\s+(VARIABLE)",
-      "beginCaptures": {
+      "match": "\\b(DEFINE\\b)\\s+(VARIABLE)",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
         "2": {
           "name": "constant.language.promula"
         }
-      },
-      "end": "\\b(END\\b)\\s+(VARIABLE)",
-      "endCaptures": {
+      }
+    },
+    "end-variable": {
+      "match": "\\b(END\\b)\\s+(VARIABLE)",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
@@ -52,17 +129,19 @@
       }
     },
     "define-set": {
-      "begin": "\\b(DEFINE\\b)\\s+(SET)",
-      "beginCaptures": {
+      "match": "\\b(DEFINE\\b)\\s+(SET)",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
         "2": {
           "name": "constant.language.promula"
         }
-      },
-      "end": "\\b(END\\b)\\s+(SET)",
-      "endCaptures": {
+      }
+    },
+    "end-set": {
+      "match": "\\b(END\\b)\\s+(SET)",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
@@ -72,17 +151,8 @@
       }
     },
     "define-relation": {
-      "begin": "\\b(DEFINE\\b)\\s+(RELATION)",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.promula"
-        },
-        "2": {
-          "name": "constant.language.promula"
-        }
-      },
-      "end": "\\b(END\\b)\\s+(RELATION)",
-      "endCaptures": {
+      "match": "\\b(DEFINE\\b)\\s+(RELATION)",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
@@ -91,30 +161,46 @@
         }
       }
     },
+    "end-relation": {
+      "match": "\\b(END\\b)\\s+(RELATION)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        },
+        "2": {
+          "name": "constant.language.promula"
+        }
+      }
+    },
+    "end": {
+      "match": "\\b(END\\b)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        }
+      }
+    },
     "define-program": {
-      "begin": "\\b(DEFINE\\b)\\s+(PROGRAM)\\s+",
-      "beginCaptures": {
+      "match": "\\b(DEFINE\\b)\\s+(PROGRAM)\\s+",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
         "2": {
           "name": "constant.language.promula"
         }
-      },
-      "end": "\\b(END\\b)\\s+(PROGRAM)",
-      "endCaptures": {
+      }
+    },
+    "end-program": {
+      "match": "\\b(END\\b)\\s+(PROGRAM)\\s+",
+      "captures": {
         "1": {
           "name": "keyword.control.promula"
         },
         "2": {
           "name": "constant.language.promula"
         }
-      },
-      "patterns": [
-        {
-          "include": "all_patterns"
-        }
-      ]
+      }
     },
     "open-segment": {
       "match": "\\b(OPEN\\b)\\s+(SEGMENT)",
@@ -124,6 +210,22 @@
         },
         "2": {
           "name": "constant.language.promula"
+        }
+      }
+    },
+    "else": {
+      "match": "\\b(ELSE\\b)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
+        }
+      }
+    },
+    "ask": {
+      "match": "\\b(ASK\\b)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.promula"
         }
       }
     },
