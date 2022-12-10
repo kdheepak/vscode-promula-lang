@@ -1,6 +1,7 @@
-* this is a comment
-OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
+  * this is a comment
+  OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
   DEFINE PROGRAM "A Demo Program"
+
   DEFINE SET
     month(12)       "Months of the Year"
     acnt(3)         "Profit and Loss Ledger Accounts"
@@ -12,6 +13,57 @@ OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
     mn(month)      "Month Names"                         TYPE=STRING(12)
     acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
   END VARIABLE
+
+  DEFINE VARIABLE
+    **
+    ** INPUTS
+    **
+    expns(mons,exps) TYPE=REAL(10,2) "Monthly Expenses by Category ($)"
+    payhr(mons) TYPE=REAL(10,0) "Payable Hours per Month (hr.)"
+    bonus(mons) TYPE=REAL(10,2) "Monthly Income Bonus"
+    taxes TYPE=REAL(10,4) "Fraction of Pay Lost to Taxes"
+    wager TYPE=REAL(10,2) "Hourly Wage Rate ($/hr.)"
+    **
+    ** OUTPUTS
+    **
+    incom(mons) TYPE=REAL(10,2) "Monthly Income ($)"
+    expnm(mons) TYPE=REAL(10,2) "Monthly Expenses ($)"
+    balns(mons) TYPE=REAL(10,2) "Monthly Balance ($)"
+    aincom TYPE=REAL(10,2) "Average Monthly Income "
+    aexpnm TYPE=REAL(10,2) "Average Monthly Expense "
+    abalns TYPE=REAL(10,2) "Average Monthly Balance "
+  END VARIABLE
+
+  DEFINE WINDOW
+    sw(01,01,28,20, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
+    mw(32,01,78,20, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
+    pw(01,23,78,23, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
+  END WINDOW
+
+  DEFINE MENU picmnu POPUP(SW,PW)
+    \EDIT\
+    \COMPUTE\
+    \DISPLAY\
+    \QUIT\
+    END
+    FIELD 1, SELECT=E, HELP=0, ACTION=1
+    EDIT VALUES
+    END
+    FIELD 2, SELECT=C, HELP=0, ACTION=2
+    COMPUTE VALUES
+    END
+    FIELD 3, SELECT=D, HELP=0, ACTION=3
+    DISPLAY VALUES
+    END
+    FIELD 4, SELECT=Q, HELP=0, ACTION=4
+    QUIT
+    END
+    END picmnu
+    DEFINE MENU datmnu
+    ENTER INPUTS
+    A = @@@@@@@@@@@@@@@
+    B = @@@@@@@@@@@@@@@
+  END
 
   DEFINE RELATION
     ROW(month,mn)
@@ -47,16 +99,707 @@ OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
 
   DEFINE PROCEDURE profits
     SELECT acnt(Sales)
-      WRITE"Please enter the monthly sales figures."
-      READ mp(acnt,month)
+    WRITE"Please enter the monthly sales figures."
+    READ mp(acnt,month)
     SELECT acnt(Costs)
-      WRITE"Please enter the monthly cost figures."
-      READ mp(acnt,month)
-    SELECT acnt*
-      mp(m,3) = mp(m,1) - mp(m,2)
-      amp = SUM(m)(mp(m,3)/12)
-      WRITE mp
-      WRITE amp
+    WRITE"Please enter the monthly cost figures."
+    READ mp(acnt,month)
+    SELECT acnt* * this is a comment
+    mp(m,3) = mp(m,1) - mp(m,2)
+    amp = SUM(m)(mp(m,3)/12)
+    WRITE mp
+    WRITE amp
+
+    DO IF taxes GT 1
+      WRITE ("The value of taxes should be less than one.")
+    ELSE taxes LE 0
+      WRITE ("The value of taxes should be greater than or equal to zero.")
+    ELSE taxes GT 0.50
+      WRITE ("The value of taxes should be less than 0.5")
+    END IF
+
   END PROCEDURE profits
 
+  DEFINE PROCEDURE ctrl
+    SELECT picmnu(opt)
+    DO IF opt EQ 4
+      BREAK ctrl
+    ELSE opt EQ 1
+      EDIT datmnu(a,b)
+    ELSE opt EQ 2
+      x = a * b
+    ELSE opt EQ 3
+      WRITE CENTER (a " * " b " = " x // "PRESS A KEY TO CONTINUE") CLEAR(-1)
+    END
+    ctrl
+  END PROCEDURE ctrl
+
+  DEFINE PROCEDURE start
+    OPEN mw MAIN
+    OPEN pw PROMPT
+    ctrl
+    CLEAR MAIN
+    CLEAR PROMPT
+    WRITE CLEAR(0)
+  END PROCEDURE start
+  DEFINE FILE
+    tf TYPE=TEXT "A Text File"
+  END FILE
+
+  OPEN tf "expns.dat" STATUS=NEW
+  DO mons
+    WRITE tf((exps)(expns(mons,expns))
+  END mons
+  WRITE tf(aincom/aincom/abalns)
+  CLEAR tf
+
+  DEFINE PROCEDURE recurs
+    SELECT pickmenu(choice)
+    DO IF PICK EQ 1 * Here is the test of the DO condition.
+    BREAK recurs
+    ELSE PICK EQ 2
+    Statements of Action A
+    ELSE PICK EQ 3
+    Statements of Action B
+    ELSE PICK EQ 4
+    Statements of Action C
+    END IF
+    recurs * Here, the procedure recurs calls itself.
+  END PROCEDURE recurs
+
+  DEFINE PROCEDURE askit
+    WRITE ("E>dit inputs; C>alculate; V>iew outputs; or press [End] to exit"/)
+    ASK "Please enter your selection." END
+    BREAK askit
+    ELSE E
+    * statements for editing inputs
+    ELSE C
+    * statements for calculations
+    ELSE V
+    * statements for viewing outputs
+    END ASK
+    askit
+  END PROCEDURE askit
+
+  DEFINE VARIABLE
+    choice
+  END VARIABLE
+
+  DEFINE MENU pickmenu
+    1 \Exit \
+    2 \Edit inputs\
+    3 \Calculate\
+    4 \View outputs\
+  END
+
+  DEFINE PROCEDURE menuit
+    SELECT pickmenu(choice)
+    DO IF PICK EQ 1
+    BREAK menuit
+    ELSE PICK EQ 2
+    * statements for editing inputs
+    ELSE PICK EQ 3
+    * statements for calculations
+    ELSE PICK EQ 4
+    * statements for viewing outputs
+    END IF
+    menuit
+  END PROCEDURE menuit
+
+  DEFINE PROCEDURE selvar
+    SELECT indir(a,b,c)
+    DO IF END
+      BREAK selvar
+    END
+    WRITE indir
+  END PROCEDURE selvar
+
+  DEFINE SET
+    pnt(4)
+  END SET
+
+  DEFINE VARIABLE
+    str1(pnt) TYPE=STRING(20) "String Result"
+    num1(pnt) TYPE=REAL(10,3) "1st Number"
+    num2(pnt) TYPE=REAL(10,3) "2nd Number"
+  END VARIABLE
+
+  num1(i) = i*2
+  num2(i) = i*3
+  str1(i) = num1:-3:0(i) +" PLUS "+ num2:-3:0(i) +" = "+(num1(i)+num2(i))
+  DEFINE VARIABLE
+    A TYPE=STRING(20)
+    B TYPE=STRING(20)
+    C TYPE=STRING(40)
+    V TYPE=REAL(8,0)
+  END VARIABLE
+
+  READ A
+  The cow jumped ov
+  READ B
+  er the moon.
+  C = A+B
+  WRITE C
+  * The cow jumped over the moon.
+  V = 10
+  C = V*20 + V
+  WRITE C
+  * 210
+
+  DEFINE VARIABLE
+    rsp TYPE=STRING(8)
+  END VARIABLE
+
+  DEFINE PROCEDURE comp
+    WRITE "Do you agree? (Y/N)"
+    READ rsp
+    DO IF COMPARE(rsp,"Y")
+      WRITE ("Why do you agree?")
+    ELSE COMPARE(rsp,"N")
+      WRITE ("Why don't you agree?")
+    END IF
+  END PROCEDURE comp
+
+  DEFINE VARIABLE
+    x
+    a
+    b
+    c
+  END VARIABLE
+
+  DEFINE PROCEDURE calc
+    a = FLOOR(x)
+    b = ROUND(x)
+    c = IFIX(x)
+    WRITE (x:5:2 a:12:2 b:12:2 c:12:2/)
+  END PROCEDURE calc
+
+  DEFINE PROCEDURE test
+    WRITE "x FLOOR(x) ROUND(x) IFIX(x)"
+    WRITE "------------------------------------------"
+    x = -2.25
+    calc
+    x = -2.50
+    calc
+    x = -2.75
+    calc
+    x = 2.25
+    calc
+    x = 2.50
+    calc
+    x = 2.75
+    calc
+  END PROCEDURE test
+
+  DEFINE SET
+    row(3)
+    col(2)
+    page(2)
+  END SET
+
+  DEFINE VARIABLE
+    AAA(row,col,page) "A 3-dimensional Array" VALUE = 1
+    AA(row,col) "A 2-dimensional Array"
+    A(row) "A vector"
+    S "Sum of AAA"
+  END VARIABLE
+
+*
+* For each row and col, sum AAA over page and place the result in AA.
+*
+AA(r,c) = SUM(p) (AAA(r,c,p))
+*
+* For each row, sum AAA over col and page and place the result in A.
+*
+A(r) = SUM(c,p) (AAA(r,c,p))
+*
+* Sum AAA over row, col and page and place the result in S.
+*
+S = SUM(r,c,p)(AAA(r,c,p))
+
+DEFINE PROCEDURE mod
+  DEFINE PARAMETER
+  a
+  b
+  c
+  END PARAMETER
+  c = a / b
+  c = (c - IFIX( c ) )*b
+END PROCEDURE mod
+
+avar=27
+bvar=11
+MOD(avar,bvar,cvar)
+WRITE(/avar:0:2" MOD "bvar:0:2" = "cvar/)
+
+DEFINE VARIABLE
+  x "X=" TYPE=REAL(10,5)
+  p1 VALUE=1000
+  p2 VALUE=2000
+  p3 VALUE=3000
+END VARIABLE
+
+x=RANDOM
+WRITE x
+
+x=RANDOM(p1,p2,p3)
+WRITE x
+
+  DEFINE VARIABLE
+    xvar "xvar = "
+    avar "avar = "
+    bvar "bvar = "
+    cvar "cvar = "
+    drg "Factor Converting Degrees to Radians"
+  END
+
+  drg=3.1415 / 180
+
+  DEFINE PROCEDURE functs
+    cvar = 6
+    avar = EXP(cvar)
+    WRITE("The Exponential of"cvar\30:0:2,46" = "avar:0:4)
+    cvar = LN(avar)
+    WRITE("The Natural Logarithm of"avar\30:0:4,46" = "cvar:0:4)
+    cvar = 30
+    avar = SIN(cvar*drg)
+    WRITE("The Sine Function of"cvar\30:0:2" degrees",46" = "avar:0:4)
+    cvar = ARCSIN(avar) / drg
+    WRITE("The ArcSine Function of"avar\30:0:2,46" = "cvar:0:2" degrees")
+    avar = COS(cvar*drg)
+    WRITE("The Cosine Function of"cvar\30:0:2," degrees"46" = "avar:0:4)
+    cvar = ARCCOS(avar) / drg
+    WRITE("The ArcCosine Function of"avar\30:0:4,46" = "cvar:0:2" degrees")
+    cvar = 45
+    avar = TAN(cvar*drg)
+    WRITE("The Tangent Function of"cvar\30:0:2," degrees"46" = "avar:0:4)
+    cvar = ARCTAN(avar) / drg
+    WRITE("The ArcTangent Function of"avar\30:0:4,46" = "cvar:0:2" degrees")
+    cvar = 2
+    avar = SQRT(cvar)
+    WRITE("The Square Root of"cvar\30:0:2,46" = "avar:0:4)
+    avar = cvar**0.5
+    WRITE("The 1/2 Power of"cvar\30:0:2,46" = "avar:0:4)
+    bvar = 3
+    avar = XMIN(bvar,cvar)
+    WRITE("The Minimum of"bvar\30:0:1" and "cvar:0:1,46" = "avar:0:2)
+    avar = XMAX(bvar,cvar)
+    WRITE("The Maximum of"bvar\30:0:1" and "cvar:0:1,46" = "avar:0:2)
+  END PROCEDURE functs
+
+  DEFINE FILE
+    file1 TYPE=ARRAY
+    file2 TYPE=ARRAY
+    file3 TYPE=RANDOM
+  END FILE
+  OPEN file1 "file1.dba" STATUS = NEW
+  OPEN file2 "file2.dba" STATUS = NEW
+  OPEN file3 "file3.ran" STATUS = NEW
+  DEFINE VARIABLE
+    fexist "File Exist Status = "
+    fdelete "File Delete Status = "
+    records "Number of records in a random file = "
+    fname TYPE=STRING(20) "File Name"
+  END VARIABLE
+
+  DEFINE VARIABLE
+    srch TYPE=STRING(25) "Search Path = "
+    fspec TYPE=STRING(25) "Selected File Specification = "
+    fpath TYPE=STRING(25) "Selected File Path = "
+    fname TYPE=STRING(9) "Selected File Name = "
+    fextn TYPE=STRING(4) "Selected File Extension = "
+  END VARIABLE
+  DEFINE PROCEDURE filefunc
+    srch = "*.txt"
+    fspec = GETDIR(srch)
+    DO IF NULL
+      WRITE("NO FILES MATCH") CLEAR(-1)
+      filefunc
+    END
+    DO IF END
+      WRITE("NO FILE SELECTED") CLEAR(-1)
+      BREAK filefunc
+    END
+    fpath = FILEPATH(fspec)
+    fname = FILENAME(fspec)
+    fextn = FILEEXT(fspec)
+    WRITE srch:-25
+    WRITE fspec:-25
+    WRITE fpath:-25
+    WRITE fname:-10
+    WRITE fextn:-4
+    WRITE CLEAR(-1)
+    filefunc
+  END PROCEDURE filefunc
+
+  DEFINE VARIABLE
+    a "A value =" TYPE=REAL(10,4) VALUE=1
+    b "B value =" TYPE=REAL(10,4) VALUE=2
+    c "C value =" TYPE=REAL(10,4) VALUE=3
+    indir*
+  END VARIABLE
+
+  DEFINE PROCEDURE selvar
+    SELECT indir
+    DO IF END
+      BREAK selvar
+    END
+    DO IF INDIRECT(indir,a)
+      WRITE ("You have selected variable A"/)
+    ELSE INDIRECT(indir,b,c)
+      WRITE ("You have selected variable B or variable C"/)
+    END IF INDIRECT
+    WRITE indir
+    WRITE (indir:L)
+    WRITE (/"Press any key to continue") CLEAR(-1)
+    selvar
+  END PROCEDURE selvar
+
+  DEFINE SET
+    month(12) "Set of 12 Months"
+    acnt(3) "Account"
+  END
+
+  DEFINE VARIABLE
+    md(month,acnt) "Data by Month and Account"
+  END VARIABLE
+
+  SELECT month(1,6,9-12)
+  SELECT month*
+  SELECT SET (month)
+  SELECT ENTRY (month)
+  SELECT VARIABLE (md)
+  SELECT month IF md GT 4
+
+  DEFINE PROCEDURE DYNAM1
+    ** Begin Initial Section
+    WRITE CENTER("Initial Section. Time=",TIME)
+    POPT=100000
+    ** End Initial Section / Begin Rate Section
+    RATE (BRTYR=BRTV, MRTYR=MRTV)
+    WRITE CENTER(/"Rate Section. Time=",TIME)
+    DRGV = DRG(TIME)
+    BTHS = POPT * BR * BRTV
+    MGNTS = POPT * MR * MRTV
+    DTHS = POPT * DR * DRGV
+    WRITE POPT
+    WRITE BTHS
+    WRITE MGNTS
+    WRITE DTHS
+    WRITE BRTV::4
+    WRITE MRTV::4
+    WRITE DRGV::4
+    ** End Rate Section / Begin Level Section
+    LEVEL ( POPYR=POPT, BTHYR=BTHS, DTHYR=DTHS, MGTYR=MGNTS)
+    WRITE CENTER (/"Level Section, Time=", TIME)
+    POPT = POPT + (DT * BTHS) + (DT * MGNTS) - (DT * DTHS)
+    WRITE POPT
+  END PROCEDURE DYNAM1
+
+  DEFINE TABLE
+    report(col),
+    FORMAT(40,10),
+    TITLE("ACME Corporation"/,
+    "Ten-Year Financial Summary"/,
+    "(Million Dollars)"/),
+    BODY(eqls / netsal /,
+    "Costs and Expenses:",
+    empcos msrvce dep taxes dash sub1 dash opinc/,
+    "Other Income (Expense):",
+    intinc intexp clcost othexp dash ibtax itax dash netinc eqls)
+  END TABLE
+  DEFINE PROCEDURE wrrep
+    SELECT col(11-13)
+    sub1=empcos+msrvce+dep+taxes
+    SELECT LINES=60,ZERO=DASHES,HEADING=OFF,COMMA=ON,MINUS=PARENTHESES
+    report
+    SELECT col*
+    SELECT LINES=25,ZERO=ON,HEADING=ON,COMMA=OFF,MINUS=LEADING
+  END PROCEDURE wrrep
+
+  DEFINE SET
+    grp(2) "Test Groups"
+    tim(10) "Time Points" TIME(0,9)
+  END SET
+  DEFINE VARIABLE
+    rspv(tim,grp) "Response by Group and Time"
+    dosv(tim,grp) "Dose at Each Time Point"
+  END VARIABLE
+  READ dosv(grp,tim)
+    0.5 1.0 1.5 2.0 2.5 15.0 17.5 20.0 22.5 25.0
+    0.5 1.0 1.5 2.0 2.5 15.0 17.5 20.0 22.5 25.0
+  READ rspv(grp,tim)
+    1.3 2.1 3.5 6.0 6.6 6.1 6.0 11.2 5.7 5.7
+    0.3 1.9 3.6 6.2 5.3 3.3 2.7 10.7 5.5 9.7
+  DO CORRELATE(grp,tim) (dosv,rspv,TIME)
+  DO DESCRIBE(col,row) (a::2)
+
+  * Create three files on disk
+  DEFINE FILE
+    file1
+    file2
+    file3
+  END
+
+  OPEN file1 "file1.fil" STATUS = NEW
+  OPEN file2 "file2.fil" STATUS = NEW
+  OPEN file3 "file3.fil" STATUS = NEW
+  CLEAR file1
+  CLEAR file2
+  CLEAR file3
+
+  DEFINE VARIABLE
+    fname "File Name" TYPE=STRING(15)
+  END VARIABLE
+  DO DIRECTORY "*.fil" INTO fname
+    WRITE fname
+  END DO DIRECTORY
+
+  DEFINE PROCEDURE doif
+    DO IF x GT y
+    WRITE("x= ",x:5:2,", y= ",y:5:2/"x is greater than y")
+    ELSE x EQ y
+    WRITE("x= ",x:5:2,", y= ",y:5:2/"x is equal to y")
+    ELSE
+    WRITE("x= ",x:5:2,", y= ",y:5:2/"x is less than y")
+    END IF
+  END PROCEDURE doif
+
+  DEFINE PROCEDURE null
+    WRITE ("Enter the Lower Limit.")
+    READ lmt
+    SELECT mn IF mv GT lmt
+    DO IF END
+    WRITE("There are no months with value greater than"lmt)
+    WRITE("Try again.")
+    null
+    END IF END
+    WRITE mv:40
+  END PROCEDURE null
+
+  DEFINE PROCEDURE chkval
+    WRITE "Please enter a value."
+    READ val
+    ans = 100/val
+    DO IF ERROR 538
+    WRITE ("Please enter a nonzero value.") * Error 538 is caused by an arithmetic overflow or underflow.
+    READ val
+    END IF ERROR
+    WRITE ("The answer is ",ans:-8:3)
+  END PROCEDURE chkval
+
+  DEFINE PROCEDURE noesc
+    WRITE "Please enter the value."
+    READ val
+    DO IF ESCAPE
+    WRITE ("There is no escape!")
+    END IF ESCAPE
+    WRITE ("The value is ",val:-8:3)
+  END PROCEDURE noesc
+
+  DEFINE PROCEDURE null
+    WRITE ("Enter the Lower Limit.")
+    READ lmt
+    SELECT mn IF mv GT lmt
+    DO IF NULL
+    WRITE("There are no months with value greater than"lmt)
+    WRITE("Try again.")
+    null
+    END IF NULL
+    WRITE mv:40
+  END PROCEDURE null
+
+  DEFINE PROCEDURE test
+    EDIT var TITLE(var:D//,
+    "Press ALT-P to save ",/.
+    ":Atd-D to see difference")
+    DO IF KEYPRESS(ALTP)
+    prt
+    END
+    DO IF KEYPRESS(ALTD)
+    dif
+    END
+  END
+
+
+  DEFINE PROCEDURE test
+    DO page
+    *
+    * Set IA equal to A
+    *
+    ia = a
+    *
+    * Invert IA and display the result.
+    *
+    DO INVERT (arow,acol) ia
+    WRITE ia(arow,acol,page) TITLE(/"INVERT (arow,acol) a")
+    *
+    * Verify result by computing and displaying the matrix product of A and IA.
+    *
+    um(p,i,k) = SUM(j) ( a(p,i,j) * ia(p,j,k) )
+    WRITE um(brow,bcol,page) TITLE(/"VERIFY: UNIT MATRIX?")
+    END page
+  END PROCEDURE test
+
+  DEFINE PROCEDURE test
+    *
+    * Copy the result vectors B(i,page) into the vectors X(i,page).
+    *
+    x = b
+    *
+    * Solve system of linear equations for each page.
+    *
+    DO LSOLVE(arow,acol,page) (a, x)
+    *
+    * Verify the Results. A(i,j) . X(i,p) = should equal B(i,p).
+    *
+    y(i,p) = SUM(j) ( a(i,j) * x(j,p) )
+    WRITE a::2
+    WRITE b::2
+    WRITE x::2
+    WRITE y::2
+  END PROCEDURE test
+
+
+  DEFINE PROCEDURE proc
+    SELECT run(2)
+    SELECT RUNID=run SCENARIO=sname
+    WRITE a\7:7 TITLE(a:L)
+  END PROCEDURE proc
+
+  DO proc SUBTITLE "This is the subtitle"
+
+  DO REGRESS(grp,tim) (rsp,iv1,iv2)
+
+  DO REGRESS(grp,tim) (rsp,iv1,iv2),
+    COEFF = cf,
+    TVALUE = tv,
+    STDERR = se,
+    STDDEV = sd,
+    RSQUAR = rs
+
+  DEFINE PROCEDURE doset
+    DO month
+      m = month:S
+      mv = m * 10
+      WRITE CENTER("The current month number is " m:-5 " The monthly value is " mv:-5)
+    END month
+  END PROCEDURE doset
+
+  DO WHILE x LT 3
+    WRITE (x,"Top of the loop")
+    x = x+1
+    WRITE (x,"Bottom of the loop")
+  END WHILE
+
+  DO UNTIL x LT 3
+    WRITE (x,"Top of the loop")
+    x = x+1
+    WRITE (x,"Bottom of the loop")
+  END UNTIL
+
+  DEFINE PROCEDURE selent
+    SELECT ROW(dir,dirn)
+    SELECT ENTRY dir
+    WRITE dir
+  END PROCEDURE selent
+
+
+  DEFINE PROCEDURE selfld
+    ASK "Would you like to change a Menu field: Y or N",Y
+      WRITE "Enter Field Number (1 thru 9)"
+      READ fldno
+      ASK "Would you like to blank or change the field: B or C",B
+        SELECT FIELD pickit, FIELD=fldno
+      ELSE C
+        WRITE "Enter new field descriptor (up to 25 characters)"
+        READ flddes
+        SELECT FIELD pickit, FIELD=fldno,DESCRIPTOR=flddes
+      END
+      selfld
+    ELSE N
+    END
+  END
+
+  DEFINE PROCEDURE demo
+    SELECT pickit(pick)
+    WRITE GOTOXY(0,10)
+    DO IF pick EQ 5
+      selfld
+    ELSE
+      WRITE ("SELECTION = "pick)
+    END IF
+    demo
+  END PROCEDURE demo
+
+  DEFINE PROCEDURE selvar
+    SELECT indir(xval,yval,zval)
+    DO IF END
+      WRITE "Goodbye"
+      BREAK selvar
+    END IF
+    WRITE (indir:L,indir) CLEAR(-1)
+    selvar
+  END PROCEDURE selvar
+
+  DEFINE RELATION
+    ROW(year,yn)
+    KEY(acnt,acn)
+  END RELATION
+  SELECT COLUMN(acnt,*)
+
+  DEFINE PROCEDURE selset
+    SELECT ROW(dir,dirn)
+    SELECT SET dir
+    WRITE dir
+  END PROCEDURE selset
+
+  SELECT month IF mv NE 0
+
+  DEFINE PROCEDURE slcvar
+    SELECT VARIABLE val
+    WRITE val
+  END PROCEDURE slcvar
+
+  SORT DESCENDING row USING var2
+
+
+  WRITE scr
+  scr = 6
+  WRITE DISK(scr)
+  WRITE (dsk:L," ",dsk(pp))
+
+
+  DO ran1
+    WRITE txt1(item1:8,item2:8,item3:8)
+  END ran1
+
+  WRITE fx\10:10:4 TITLE(/"Y=f(x)=x**2")
+  WRITE gx\3:6:1 TITLE(/"Y=g(x)=2x**2")
+
+  DEFINE PROCEDURE wrttab
+    SELECT LINES=60
+    WRITE TABLE(col), TITLE("The Table Title"),
+    FORMAT(20,10),
+    BODY(tot::1/"The A Values"/,a::2,/"The B Values"/,b)
+  END PROCEDURE wrttab
+
+
+  WRITE a TITLE ("Unformatted Display of variable A")
+  WRITE a\6:10:2(pag,col,row) TOTAL(col) TITLE(//"Formatted Display of variable A")
+
+  DEFINE VARIABLE SCRATCH
+    sdat1(row,col,pag) "Dynamic Array by row, col and pag"
+    DISK(filea,dat1(row,col,pag))
+    sdatb(row,col,pag) "Dynamic Array by row, col and pag"
+    DISK(filea,datb(row,col,pag))
+  END VARIABLE
+
+  DEFINE FILE
+    af TYPE=ARRAY
+  END
+  OPEN af "filea.dba" STATUS=OLD
+  COPY af IMAGE
+
 END PROGRAM, DO profits
+STOP PROMULA
