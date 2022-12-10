@@ -1,65 +1,60 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "PROMULA",
-  "patterns": [{ "include": "#all_patterns" }],
-  "repository": {
-    "all_patterns": {
-      "patterns": [
-        {
-            "name": "keyword.define",
-            "match": "\\bDefine\\b"
-        },
-        {
-            "name": "keyword.procedure",
-            "match": "\\bProcedure\\b"
-        },
-        {
-            "name": "keyword.enddefine",
-            "match": "\\bEnd Define\\b"
-        },
-        {
-            "name": "keyword.write",
-            "match": "\\bWrite\\b"
-        },
-        {
-            "name": "keyword.do",
-            "match": "\\bDo\\b"
-        },
-        {
-            "name": "keyword.if",
-            "match": "\\bIf\\b"
-        },
-        {
-            "name": "keyword.else",
-            "match": "\\bElse\\b"
-        },
-        {
-            "name": "keyword.enddo",
-            "match": "\\bEnd Do\\b"
-        },
-        {
-            "name": "keyword.select",
-            "match": "\\bSelect\\b"
-        },
-        {
-            "name": "keyword.write_disk",
-            "match": "\\bWrite Disk\\b"
-        },
-        {
-            "name": "constant.numeric",
-            "match": "\\b\\d+(?:\\.\\d+)?\\b"
-        },
-        {
-            "name": "keyword.operator.prm",
-            "match": "^(gt|lt)$"
-        },
-        {
-            "name": "string.quoted.double",
-            "begin": "\"",
-            "end": "\""
-        }
-      ]
+  "patterns": [
+    {
+      "name": "keyword.define",
+      "match": "(?i)\\bDefine\\b"
+    },
+    {
+      "name": "keyword.procedure",
+      "match": "(?i)\\bProcedure\\b"
+    },
+    {
+      "name": "keyword.enddefine",
+      "match": "(?i)\\bEnd Define\\b"
+    },
+    {
+      "name": "keyword.write",
+      "match": "(?i)\\bWrite\\b"
+    },
+    {
+      "name": "keyword.do",
+      "match": "(?i)\\bDo\\b"
+    },
+    {
+      "name": "keyword.if",
+      "match": "(?i)\\bIf\\b"
+    },
+    {
+      "name": "keyword.else",
+      "match": "(?i)\\bElse\\b"
+    },
+    {
+      "name": "keyword.enddo",
+      "match": "(?i)\\bEnd Do\\b"
+    },
+    {
+      "name": "keyword.select",
+      "match": "(?i)\\bSelect\\b"
+    },
+    {
+      "name": "keyword.write_disk",
+      "match": "(?i)\\bWrite Disk\\b"
+    },
+    {
+      "name": "constant.numeric",
+      "match": "(?i)\\b\\d+(?:\\.\\d+)?\\b"
+    },
+    {
+      "name": "keyword.operator.prm",
+      "match": "^(gt|lt)$"
+    },
+    {
+      "name": "string.quoted.double",
+      "begin": "\"",
+      "end": "\""
     }
-  },
+  ],
   "scopeName": "source.promula"
 }
