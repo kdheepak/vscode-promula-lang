@@ -3,44 +3,57 @@
   "name": "PROMULA",
   "patterns": [
     {
-      "name": "keyword.define",
-      "match": "(?i)\\bDefine\\b"
+      "match": "^(\\s*)\\*.*$",
+      "name": "comment.line.prm",
+      "scope": "comment"
     },
     {
-      "name": "keyword.procedure",
-      "match": "(?i)\\bProcedure\\b"
+      "name": "keyword.control.prm",
+      "match": "(?i)\\bOPEN\\s+(?:SEGMENT|PROGRAM)\\b"
     },
     {
-      "name": "keyword.enddefine",
-      "match": "(?i)\\bEnd Define\\b"
+      "name": "keyword.control.prm",
+      "match": "(?i)\\bDEFINE\\s+(?:PROGRAM|SET|VARIABLE|RELATION|PROCEDURE)\\b"
     },
     {
-      "name": "keyword.write",
-      "match": "(?i)\\bWrite\\b"
+      "name": "keyword.control.prm",
+      "match": "(?i)\\bEND\\s+(?:PROGRAM|SET|VARIABLE|RELATION|PROCEDURE|ASK)\\b"
     },
     {
-      "name": "keyword.do",
-      "match": "(?i)\\bDo\\b"
+      "name": "keyword.control.prm",
+      "match": "(?i)\\b(?:DO|ASK|END)\\b"
+    },
+    {
+      "name": "support.type.prm",
+      "match": "(?i)\\b(?:REAL|STRING)\\b"
+    },
+    {
+      "name": "support.type.prm",
+      "match": "(?i)\\b(?:ROW|COLUMN|KEY)\\b"
+    },
+    {
+      "name": "support.function.prm",
+      "match": "(?i)\\b(?:SELECT|SUM|READ|WRITE)\\b"
     },
     {
       "name": "keyword.if",
-      "match": "(?i)\\bIf\\b"
+      "match": "(?i)\\bIF\\b"
     },
     {
       "name": "keyword.else",
-      "match": "(?i)\\bElse\\b"
+      "match": "(?i)\\bELSE\\b"
     },
     {
       "name": "keyword.enddo",
-      "match": "(?i)\\bEnd Do\\b"
+      "match": "(?i)\\bEND DO\\b"
     },
     {
       "name": "keyword.select",
-      "match": "(?i)\\bSelect\\b"
+      "match": "(?i)\\bSELECT\\b"
     },
     {
       "name": "keyword.write_disk",
-      "match": "(?i)\\bWrite Disk\\b"
+      "match": "(?i)\\bWRITE DISK\\b"
     },
     {
       "name": "constant.numeric",
