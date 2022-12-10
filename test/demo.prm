@@ -20,21 +20,21 @@ OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
   END RELATION
 
   READ mn
-  January
-  February
-  March
-  April
-  May
-  June
-  July
-  August
-  September
-  October
-  November
-  December
+    January
+    February
+    March
+    April
+    May
+    June
+    July
+    August
+    September
+    October
+    November
+    December
 
   READ acn:6
-  Sales Costs Profit
+    Sales Costs Profit
 
   DEFINE PROCEDURE yesno
     ASK "Do you wish to continue? (yes/no)", yes
