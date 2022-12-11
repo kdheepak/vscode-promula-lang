@@ -44,23 +44,23 @@
         {
           "begin": "^\\s*\\*",
           "end": "\n",
-          "name": "comment.line"
+          "name": "comment.line.promula"
         }
       ]
     },
     "numeric-constant": {
-      "name": "constant.numeric",
+      "name": "constant.numeric.promula",
       "match": "(?ix)[\\+\\-]?(\\b\\d+\\.?\\d*|\\.\\d+) (_\\w+|d[\\+\\-]?\\d+|e[\\+\\-]?\\d+(_\\w+)?)?(?![a-z_])"
     },
     "string": {
       "patterns": [
         {
-          "name": "string.quoted.double",
+          "name": "string.quoted.double.promula",
           "begin": "\"",
           "end": "\""
         },
         {
-          "name": "string.quoted.single",
+          "name": "string.quoted.single.promula",
           "begin": "'",
           "end": "'"
         }
@@ -76,7 +76,7 @@
               "include": "#string"
             }
           ],
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         }
       ]
     },
@@ -95,7 +95,7 @@
         },
         {
           "match": "\\s*\\(.*?\\)\\s*",
-          "name": "meta.group"
+          "name": "meta.group.promula"
         },
         {
           "match": "(?i)\\b(END)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
@@ -134,7 +134,7 @@
           "name": "constant.language.promula"
         },
         "3": {
-          "name": "entity.name.function.lua"
+          "name": "entity.name.function.promula"
         }
       }
     },
@@ -142,39 +142,39 @@
       "patterns": [
         {
           "match": "(?i)\\bOPEN\\s+SEGMENT\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bTYPE=\\w+\\b",
-          "name": "keyword.other.unit"
+          "name": "keyword.other.unit.promula"
         },
         {
           "match": "(?i)\\bTYPE=REAL\\(\\d+,\\d+\\)\\b",
-          "name": "keyword.other.unit"
+          "name": "keyword.other.unit.promula"
         },
         {
           "match": "(?i)\\bTYPE=STRING\\(\\d+\\)\\b",
-          "name": "keyword.other.unit"
+          "name": "keyword.other.unit.promula"
         },
         {
           "match": "(?i)\\bPOPUP\\(.*?\\)\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bASK\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bDO\\s+IF\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bDO\\s+UNTIL\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bDO\\s+WHILE\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\b(DO)\\s+(\\w+)\\b",
@@ -189,43 +189,43 @@
         },
         {
           "match": "(?i)\\bEND\\s+\\w+\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bELSE\\s+IF\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bELSE\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bBREAK\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bEND\\s+IF\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bEND\\b",
-          "name": "keyword.control.end"
+          "name": "keyword.control.end.promula"
         },
         {
           "match": "(?i)\\bDO\\s+\\w+\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bEND\\s+DO\\s+\\w+\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bEND\\s+\\w+\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         },
         {
           "match": "(?i)\\bSTOP\\s+PROMULA\\b",
-          "name": "keyword.control"
+          "name": "keyword.control.promula"
         }
       ]
     },
@@ -233,7 +233,7 @@
       "patterns": [
         {
           "match": "\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ)\\b",
-          "name": "keyword.operator"
+          "name": "keyword.operator.promula"
         }
       ]
     },
@@ -241,7 +241,7 @@
       "patterns": [
         {
           "match": "\\b(READ|WRITE|CLEAR|OPEN|SELECT|SUM|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
-          "name": "support.function"
+          "name": "support.function,promula"
         }
       ]
     }
