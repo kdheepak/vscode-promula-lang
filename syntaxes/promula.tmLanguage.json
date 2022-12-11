@@ -26,6 +26,9 @@
       "include": "#open-segment"
     },
     {
+      "include": "#open-file"
+    },
+    {
       "include": "#keyword"
     },
     {
@@ -69,14 +72,40 @@
     "open-segment": {
       "patterns": [
         {
-          "begin": "(?i)\\bOPEN SEGMENT\\b",
-          "end": "(?i)\\bSTATUS=NEW\\b",
+          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b.*\\bSTATUS=\\w+\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "storage.type.promula"
+            }
+          },
           "patterns": [
             {
               "include": "#string"
             }
-          ],
-          "name": "keyword.control.promula"
+          ]
+        }
+      ]
+    },
+    "open-file": {
+      "patterns": [
+        {
+          "match": "(?i)\\b(OPEN)\\s+(\\w+)\\b\\bSTATUS=\\w+$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "entity.name"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#string"
+            }
+          ]
         }
       ]
     },
@@ -89,13 +118,9 @@
               "name": "keyword.control.promula"
             },
             "2": {
-              "name": "constant.language.promula"
+              "name": "storage.type.promula"
             }
           }
-        },
-        {
-          "match": "\\s*\\(.*?\\)\\s*",
-          "name": "meta.group.promula"
         },
         {
           "match": "(?i)\\b(END)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
@@ -104,7 +129,7 @@
               "name": "keyword.control.promula"
             },
             "2": {
-              "name": "constant.language.promula"
+              "name": "storage.type.promula"
             }
           }
         }
@@ -117,10 +142,10 @@
           "name": "keyword.control.promula"
         },
         "2": {
-          "name": "constant.language.promula"
+          "name": "storage.type.function.promula"
         },
         "3": {
-          "name": "entity.name.function.lua"
+          "name": "entity.name.function.promula"
         }
       }
     },
@@ -131,7 +156,7 @@
           "name": "keyword.control.promula"
         },
         "2": {
-          "name": "constant.language.promula"
+          "name": "storage.type.function.promula"
         },
         "3": {
           "name": "entity.name.function.promula"
@@ -145,15 +170,15 @@
           "name": "keyword.control.promula"
         },
         {
-          "match": "(?i)\\bTYPE=\\w+\\b",
-          "name": "keyword.other.unit.promula"
-        },
-        {
           "match": "(?i)\\bTYPE=REAL\\(\\d+,\\d+\\)\\b",
           "name": "keyword.other.unit.promula"
         },
         {
           "match": "(?i)\\bTYPE=STRING\\(\\d+\\)\\b",
+          "name": "keyword.other.unit.promula"
+        },
+        {
+          "match": "(?i)\\bTYPE=\\w+\\b",
           "name": "keyword.other.unit.promula"
         },
         {
@@ -177,21 +202,6 @@
           "name": "keyword.control.promula"
         },
         {
-          "match": "(?i)\\b(DO)\\s+(\\w+)\\b",
-          "captures": {
-            "1": {
-              "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "entity.name.promula"
-            }
-          }
-        },
-        {
-          "match": "(?i)\\bEND\\s+\\w+\\b",
-          "name": "keyword.control.promula"
-        },
-        {
           "match": "(?i)\\bELSE\\s+IF\\b",
           "name": "keyword.control.promula"
         },
@@ -208,20 +218,34 @@
           "name": "keyword.control.promula"
         },
         {
-          "match": "(?i)\\bEND\\b",
-          "name": "keyword.control.end.promula"
-        },
-        {
-          "match": "(?i)\\bDO\\s+\\w+\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(DO)\\s+(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "entity.name.selector.promula"
+            }
+          }
         },
         {
           "match": "(?i)\\bEND\\s+DO\\s+\\w+\\b",
           "name": "keyword.control.promula"
         },
         {
-          "match": "(?i)\\bEND\\s+\\w+\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(END)\\s+(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "entity.name.selector.promula"
+            }
+          }
+        },
+        {
+          "match": "(?i)\\bEND\\b",
+          "name": "keyword.control.end.promula"
         },
         {
           "match": "(?i)\\bSTOP\\s+PROMULA\\b",
@@ -241,7 +265,7 @@
       "patterns": [
         {
           "match": "\\b(READ|WRITE|CLEAR|OPEN|SELECT|SUM|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
-          "name": "support.function,promula"
+          "name": "support.function.promula"
         }
       ]
     }

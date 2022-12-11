@@ -15,6 +15,10 @@ DEFINE PROGRAM "A Demo Program"
     acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
   END VARIABLE
 
+  DEFINE FILE
+    tf TYPE=TEXT "A Text File"
+  END FILE
+
   DEFINE VARIABLE
     **
     ** INPUTS
@@ -34,6 +38,10 @@ DEFINE PROGRAM "A Demo Program"
     aexpnm TYPE=REAL(10,2) "Average Monthly Expense "
     abalns TYPE=REAL(10,2) "Average Monthly Balance "
   END VARIABLE
+
+  DEFINE FILE
+    tf TYPE=TEXT "A Text File"
+  END FILE
 
   DEFINE WINDOW
     sw(01,01,28,20, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
@@ -70,7 +78,7 @@ DEFINE PROGRAM "A Demo Program"
       yesno
     ELSE no
       WRITE("Stop")
-    END ask
+    END ASK
   END PROCEDURE yesno
 
   DEFINE PROCEDURE profits
@@ -95,6 +103,10 @@ DEFINE PROGRAM "A Demo Program"
     END IF
 
   END PROCEDURE profits
+
+  DEFINE FILE
+    tf TYPE=TEXT "A Text File"
+  END FILE
 
   DEFINE PROCEDURE ctrl
     SELECT picmnu(opt)
