@@ -1,51 +1,51 @@
 {
-	"name": "promula",
-	"displayName": "PROMULA",
-	"description": "Great Migrations PROMULA Application Development System ADS",
-	"repository": "https://github.com/kdheepak/vscode-promula-lang",
-	"version": "0.0.4",
-	"publisher": "kdheepak",
-	"engines": {
-		"vscode": "^1.73.0"
-	},
-	"categories": [
-		"Programming Languages"
-	],
-	"contributes": {
-		"languages": [
-			{
-				"id": "promula",
-				"aliases": [
-					"PROMULA",
-					"promula"
-				],
-				"extensions": [
-					".prm",
-					".src",
-					".txt",
-					".txp",
-					".txo"
-				],
-				"configuration": "./language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "promula",
-				"scopeName": "source.promula",
-				"path": "./syntaxes/promula.tmLanguage.json"
-			}
-		]
-	},
-	"__metadata": {
-		"id": "54d449be-1ea8-4a87-8c2c-b4d54e7f3b65",
-		"publisherId": "e4ba1a75-1d16-4e70-97a4-7366e7d5353d",
-		"publisherDisplayName": "kdheepak",
-		"targetPlatform": "undefined",
-		"isApplicationScoped": false,
-		"updated": true,
-		"isPreReleaseVersion": false,
-		"installedTimestamp": 1670709402203,
-		"preRelease": false
-	}
+  "name": "promula",
+  "displayName": "PROMULA",
+  "description": "Great Migrations PROMULA Application Development System ADS",
+  "repository": "https://github.com/kdheepak/vscode-promula-lang",
+  "version": "0.0.5",
+  "publisher": "kdheepak",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "promula",
+        "aliases": [
+          "PROMULA",
+          "promula"
+        ],
+        "extensions": [
+          ".prm",
+          ".src",
+          ".txt",
+          ".txp",
+          ".txo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "promula",
+        "scopeName": "source.promula",
+        "path": "./syntaxes/promula.tmLanguage.json"
+      }
+    ]
+  },
+  "__metadata": {
+    "id": "54d449be-1ea8-4a87-8c2c-b4d54e7f3b65",
+    "publisherId": "e4ba1a75-1d16-4e70-97a4-7366e7d5353d",
+    "publisherDisplayName": "kdheepak",
+    "targetPlatform": "undefined",
+    "isApplicationScoped": false,
+    "updated": true,
+    "isPreReleaseVersion": false,
+    "installedTimestamp": 1670709402203,
+    "preRelease": false
+  }
 }
