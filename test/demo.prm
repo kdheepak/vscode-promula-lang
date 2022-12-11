@@ -1,6 +1,7 @@
+OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
+DEFINE PROGRAM "A Demo Program"
+
   * this is a comment
-  OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
-  DEFINE PROGRAM "A Demo Program"
 
   DEFINE SET
     month(12)       "Months of the Year"
@@ -10,7 +11,7 @@
   DEFINE VARIABLE
     mp(month,acnt) "Monthly Profit and Loss Figures ($)" TYPE=REAL(10,0)
     amp            "Average Monthly Profit ($)"          TYPE=REAL(10,2)
-    mn(month)      "Month Names"                         TYPE=STRING(12)
+    mn(month)      "Month Names"                        TYPE=STRING(12)
     acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
   END VARIABLE
 
@@ -39,31 +40,6 @@
     mw(32,01,78,20, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
     pw(01,23,78,23, WHITE/BLACK, FULL/SINGLE/WHITE/BLACK)
   END WINDOW
-
-  DEFINE MENU picmnu POPUP(SW,PW)
-    \EDIT\
-    \COMPUTE\
-    \DISPLAY\
-    \QUIT\
-    END
-    FIELD 1, SELECT=E, HELP=0, ACTION=1
-    EDIT VALUES
-    END
-    FIELD 2, SELECT=C, HELP=0, ACTION=2
-    COMPUTE VALUES
-    END
-    FIELD 3, SELECT=D, HELP=0, ACTION=3
-    DISPLAY VALUES
-    END
-    FIELD 4, SELECT=Q, HELP=0, ACTION=4
-    QUIT
-    END
-    END picmnu
-    DEFINE MENU datmnu
-    ENTER INPUTS
-    A = @@@@@@@@@@@@@@@
-    B = @@@@@@@@@@@@@@@
-  END
 
   DEFINE RELATION
     ROW(month,mn)
@@ -104,7 +80,7 @@
     SELECT acnt(Costs)
     WRITE"Please enter the monthly cost figures."
     READ mp(acnt,month)
-    SELECT acnt* * this is a comment
+    SELECT acnt*
     mp(m,3) = mp(m,1) - mp(m,2)
     amp = SUM(m)(mp(m,3)/12)
     WRITE mp
@@ -142,6 +118,7 @@
     CLEAR PROMPT
     WRITE CLEAR(0)
   END PROCEDURE start
+
   DEFINE FILE
     tf TYPE=TEXT "A Text File"
   END FILE
@@ -155,16 +132,16 @@
 
   DEFINE PROCEDURE recurs
     SELECT pickmenu(choice)
-    DO IF PICK EQ 1 * Here is the test of the DO condition.
+    DO IF PICK EQ 1
     BREAK recurs
     ELSE PICK EQ 2
-    Statements of Action A
+    * Statements of Action A
     ELSE PICK EQ 3
-    Statements of Action B
+    * Statements of Action B
     ELSE PICK EQ 4
-    Statements of Action C
+    * Statements of Action C
     END IF
-    recurs * Here, the procedure recurs calls itself.
+    recurs
   END PROCEDURE recurs
 
   DEFINE PROCEDURE askit
@@ -508,6 +485,7 @@ WRITE x
     "Other Income (Expense):",
     intinc intexp clcost othexp dash ibtax itax dash netinc eqls)
   END TABLE
+
   DEFINE PROCEDURE wrrep
     SELECT col(11-13)
     sub1=empcos+msrvce+dep+taxes
@@ -565,7 +543,7 @@ WRITE x
     END IF
   END PROCEDURE doif
 
-  DEFINE PROCEDURE null
+  DEFINE procedure null
     WRITE ("Enter the Lower Limit.")
     READ lmt
     SELECT mn IF mv GT lmt
@@ -575,7 +553,7 @@ WRITE x
     null
     END IF END
     WRITE mv:40
-  END PROCEDURE null
+  EnD PROCEDURE null
 
   DEFINE PROCEDURE chkval
     WRITE "Please enter a value."
@@ -632,11 +610,11 @@ WRITE x
     * Invert IA and display the result.
     *
     DO INVERT (arow,acol) ia
-    WRITE ia(arow,acol,page) TITLE(/"INVERT (arow,acol) a")
+    * WRITE ia(arow,acol,page) TITLE(/"INVERT (arow,acol) a") TODO: why does this break everything?
     *
     * Verify result by computing and displaying the matrix product of A and IA.
     *
-    um(p,i,k) = SUM(j) ( a(p,i,j) * ia(p,j,k) )
+    um(p,i,k) = SUM(j) ( ia(p,j,k) * a(p,i,j) )
     WRITE um(brow,bcol,page) TITLE(/"VERIFY: UNIT MATRIX?")
     END page
   END PROCEDURE test
@@ -774,8 +752,8 @@ WRITE x
     WRITE txt1(item1:8,item2:8,item3:8)
   END ran1
 
-  WRITE fx\10:10:4 TITLE(/"Y=f(x)=x**2")
-  WRITE gx\3:6:1 TITLE(/"Y=g(x)=2x**2")
+*  WRITE fx\10:10:4 TITLE(/"Y=f(x)=x**2")
+*  WRITE gx\3:6:1 TITLE(/"Y=g(x)=2x**2")
 
   DEFINE PROCEDURE wrttab
     SELECT LINES=60
