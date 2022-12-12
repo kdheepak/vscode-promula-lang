@@ -396,9 +396,26 @@
       "patterns": [
         {
           "match": "\\b[a-zA-Z_]\\w*\\s*\\(\\s*(?:[^()]|(?R))*\\s*\\)",
-          "name": "entity.name.function"
+          "name": "entity.name.function.promula"
         }
       ]
+    },
+    "dummy-variable": {
+      "comment": "dummy variable",
+      "match": "(?i)(?:^|(?<=[&,\\(]))\\s*([a-z]\\w*)",
+      "captures": {
+        "1": {
+          "name": "variable.parameter.promula"
+        }
+      }
+    },
+    "invalid-character": {
+      "name": "invalid.error.promula",
+      "match": "(?i)[^\\s;!\\n]+"
+    },
+    "invalid-word": {
+      "name": "invalid.error.promula",
+      "match": "(?i)\\b\\w+\\b"
     }
   },
   "scopeName": "source.promula"
