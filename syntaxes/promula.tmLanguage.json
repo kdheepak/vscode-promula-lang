@@ -7,11 +7,14 @@
       "include": "#comment"
     },
     {
-      "match": "(?i)\\b(true|false|Inf|NegInf|NaN|nil|NA)\\b",
+      "match": "(?i)\\b(true|false|inf|neginf|nan|nil|na)\\b",
       "name": "constant.language.promula"
     },
     {
-      "include": "function-call"
+      "include": "#define-variable"
+    },
+    {
+      "include": "#define-segment"
     },
     {
       "include": "#numeric-constant"
@@ -20,16 +23,13 @@
       "include": "#define-procedure"
     },
     {
-      "include": "#end-procedure"
-    },
-    {
       "include": "#define"
     },
     {
-      "include": "#open-segment"
+      "include": "#open"
     },
     {
-      "include": "#open-file"
+      "include": "#read-segment"
     },
     {
       "include": "#function"
@@ -42,13 +42,16 @@
     },
     {
       "include": "#string"
+    },
+    {
+      "include": "#function-call"
     }
   ],
   "repository": {
     "comment": {
       "patterns": [
         {
-          "begin": "^\\s*\\*",
+          "begin": "^\\s*\\*+",
           "end": "\n",
           "name": "comment.line.promula"
         }
@@ -72,52 +75,27 @@
         }
       ]
     },
-    "open-segment": {
+    "open": {
       "patterns": [
         {
-          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b(.*)\\b(STATUS)\\s*(=)\\s*(\\w+)\\b",
+          "match": "(?i)\\b(open)\\s+(segment)\\b(.*)\\b(status)\\s*(=)\\s*(\\w+)\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "support.function.builtin.promula"
             },
             "2": {
-              "name": "storage.type.promula"
+              "name": "storage.type.segment.promula"
             },
             "3": {
               "name": "string.quoted.double"
             },
             "4": {
-              "name": "storage.type.promula"
+              "name": "storage.type.status.promula"
             },
             "5": {
               "name": "keyword.operator.promula"
             },
             "6": {
-              "name": "entity.name.promula"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#string"
-            }
-          ]
-        },
-        {
-          "match": "(?i)\\b(READ)\\s+(SEGMENT)\\s+([\\w\\d]+)(?:\\s*[,]\\s*([dD][oO])\\((\\w+)\\))?$",
-          "captures": {
-            "1": {
-              "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "storage.type.promula"
-            },
-            "3": {
-              "name": "entity.name.function.promula"
-            },
-            "4": {
-              "name": "keyword.control.promula"
-            },
-            "5": {
               "name": "entity.name.function.promula"
             }
           },
@@ -128,13 +106,13 @@
           ]
         },
         {
-          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b(.*)$",
+          "match": "(?i)\\b(open)\\s+(segment)\\b\\s*(.*)$",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "support.function.builtin.promula"
             },
             "2": {
-              "name": "storage.type.promula"
+              "name": "storage.type.segment.promula"
             },
             "3": {
               "name": "string.quoted.double"
@@ -145,19 +123,51 @@
               "include": "#string"
             }
           ]
-        }
-      ]
-    },
-    "open-file": {
-      "patterns": [
+        },
         {
-          "match": "(?i)\\b(OPEN)\\s+(\\w+)\\b\\bSTATUS=\\w+$",
+          "match": "(?i)\\b(open)\\s+(\\w+)\\b(.*)?,?\\s+(status)\\s*(=)\\s*(\\w+)$",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "support.function.builtin.promula"
             },
             "2": {
               "name": "entity.name"
+            },
+            "3": {
+              "name": "string.quoted.double"
+            },
+            "4": {
+              "name": "storage.type.status.promula"
+            },
+            "5": {
+              "name": "keyword.operator.promula"
+            },
+            "6": {
+              "name": "entity.name.function.promula"
+            }
+          }
+        }
+      ]
+    },
+    "read-segment": {
+      "patterns": [
+        {
+          "match": "(?i)\\b(read)\\s+(segment)\\s+([\\w\\d]+)(?:\\s*[,]\\s*(do)\\((\\w+)\\))?$",
+          "captures": {
+            "1": {
+              "name": "support.function.builtin.promula"
+            },
+            "2": {
+              "name": "storage.type.segment.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            },
+            "4": {
+              "name": "keyword.control.promula"
+            },
+            "5": {
+              "name": "entity.name.function.promula"
             }
           },
           "patterns": [
@@ -171,215 +181,273 @@
     "define": {
       "patterns": [
         {
-          "match": "(?i)\\b(DEFINE)\\s+(VARIABLE)\\b\\s+(SCRATCH)",
+          "match": "(?i)\\b(define)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|RELATION|SET|WINDOW)\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.define.promula"
             },
             "2": {
-              "name": "storage.type.promula"
-            },
-            "3": {
-              "name": "storage.type.promula"
+              "name": "storage.type.generic.promula"
             }
           }
         },
         {
-          "match": "(?i)\\b(DEFINE)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
+          "match": "(?i)\\b(end(?:\\s+define)?)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|RELATION|SET|WINDOW)\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.end.define.promula"
             },
             "2": {
-              "name": "storage.type.promula"
-            }
-          }
-        },
-        {
-          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
-          "captures": {
-            "1": {
-              "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "keyword.control.promula"
-            },
-            "3": {
-              "name": "storage.type.promula"
-            }
-          }
-        },
-        {
-          "match": "(?i)\\b(END)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
-          "captures": {
-            "1": {
-              "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "storage.type.promula"
+              "name": "storage.type.generic.promula"
             }
           }
         }
       ]
     },
     "define-procedure": {
-      "match": "(?i)\\b(DEFINE\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
-      "captures": {
-        "1": {
-          "name": "keyword.control.promula"
-        },
-        "2": {
-          "name": "storage.type.function.promula"
-        },
-        "3": {
-          "name": "entity.name.function.promula"
-        }
-      }
-    },
-    "end-procedure": {
       "patterns": [
         {
-          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(PROCEDURE)\\s+(\\w+)\\b",
-          "captures": {
+          "name": "meta.block.define.procedure.promula",
+          "begin": "(?i)\\b(define)\\s+(procedure)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+          "beginCaptures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.define.procedure.promula"
             },
             "2": {
-              "name": "keyword.control.promula"
+              "name": "storage.type.define.procedure.promula"
             },
             "3": {
-              "name": "storage.type.function.promula"
-            },
-            "4": {
               "name": "entity.name.function.promula"
             }
-          }
+          },
+          "end": "(?i)\\b(end(?:\\s+define\\b)?)\\b(\\s+procedure)\\s+(\\3)?\\b",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.end.procedure.promula"
+            },
+            "2": {
+              "name": "storage.type.define.procedure.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$base"
+            }
+          ]
         },
         {
-          "match": "\\b(END\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
-          "captures": {
+          "name": "meta.block.define.procedure.promula",
+          "begin": "(?i)\\b(define)\\s+(procedure)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+          "beginCaptures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.define.procedure.promula"
             },
             "2": {
-              "name": "storage.type.function.promula"
+              "name": "storage.type.define.procedure.promula"
             },
             "3": {
               "name": "entity.name.function.promula"
             }
-          }
+          },
+          "end": "(?i)\\b(end(?:\\s+define\\b)?)\\b\\s+(\\3)?\\b",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.end.procedure.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$base"
+            }
+          ]
+        }
+      ]
+    },
+    "define-variable": {
+      "name": "meta.block.define.variable.promula",
+      "begin": "(?i)\\b(define)\\s+(variable(?:\\s+scratch)?)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.define.variable.promula"
+        },
+        "2": {
+          "name": "storage.type.define.variable.promula"
+        }
+      },
+      "end": "(?i)\\b(end(?:\\s+define)?)\\s+(variable)\\b",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.end.variable.promula"
+        },
+        "2": {
+          "name": "storage.type.define.variable.promula"
+        }
+      },
+      "patterns": [
+        {
+          "include": "$base"
+        }
+      ]
+    },
+    "define-segment": {
+      "patterns": [
+        {
+          "name": "meta.block.define.segment.promula",
+          "begin": "(?i)\\b(define)\\s+(segment)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.define.segment.promula"
+            },
+            "2": {
+              "name": "storage.type.define.segment.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "end": "(?i)\\b(end(?:\\s+define\\b)?)\\b(\\s+segment)\\s+(\\3)?\\b",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.end.segment.promula"
+            },
+            "2": {
+              "name": "storage.type.define.segment.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$base"
+            }
+          ]
         },
         {
-          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(\\w+)\\b",
-          "captures": {
+          "name": "meta.block.define.segment.promula",
+          "begin": "(?i)\\b(define)\\s+(segment)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+          "beginCaptures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.define.segment.promula"
             },
             "2": {
-              "name": "keyword.control.promula"
+              "name": "storage.type.define.segment.promula"
             },
             "3": {
               "name": "entity.name.function.promula"
             }
-          }
+          },
+          "end": "(?i)\\b(end(?:\\s+define\\b)?)\\b\\s+(\\3)?\\b",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.control.end.segment.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$base"
+            }
+          ]
         }
       ]
     },
     "keyword": {
       "patterns": [
         {
-          "match": "(?i)\\bOPEN\\s+SEGMENT\\b",
-          "name": "keyword.control.promula"
-        },
-        {
-          "match": "(?i)\\bTYPE=REAL\\(\\d+,\\d+\\)\\b",
+          "match": "(?i)\\b(type=real)\\(\\d+,\\d+\\)\\b",
           "name": "keyword.other.unit.promula"
         },
         {
-          "match": "(?i)\\bTYPE=STRING\\(\\d+\\)\\b",
+          "match": "(?i)\\b(type=string)\\(\\d+\\)\\b",
           "name": "keyword.other.unit.promula"
         },
         {
-          "match": "(?i)\\bTYPE=\\w+\\b",
+          "match": "(?i)\\b(type=\\w+)\\b",
           "name": "keyword.other.unit.promula"
         },
         {
-          "match": "(?i)\\bPOPUP\\(.*?\\)\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(popup)\\(.*?\\)\\b",
+          "name": "keyword.control.popup.promula"
         },
         {
-          "match": "(?i)\\bASK\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(ask)\\b",
+          "name": "keyword.control.ask.promula"
         },
         {
-          "match": "(?i)\\bDO\\s+IF\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(do\\s+if)\\b",
+          "name": "keyword.control.do.if.promula"
         },
         {
-          "match": "(?i)\\bDO\\s+UNTIL\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(do\\s+until)\\b",
+          "name": "keyword.control.do.until.promula"
         },
         {
-          "match": "(?i)\\bDO\\s+WHILE\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(do\\s+while)\\b",
+          "name": "keyword.control.do.while.promula"
         },
         {
-          "match": "(?i)\\bELSE\\s+IF\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(else\\s+if)\\b",
+          "name": "keyword.control.else.if.promula"
         },
         {
-          "match": "(?i)\\bELSE\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(else)\\b",
+          "name": "keyword.control.else.promula"
         },
         {
-          "match": "(?i)\\bBREAK\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(break)\\b",
+          "name": "keyword.control.break.promula"
         },
         {
-          "match": "(?i)\\bEND\\s+IF\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(end\\s+if)\\b",
+          "name": "keyword.control.end.if.promula"
         },
         {
-          "match": "(?i)\\b(DO)\\s+\\w+\\b",
+          "match": "(?i)\\b(do)\\s+\\w+\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.do.word.promula"
             }
           }
         },
         {
-          "match": "(?i)\\b(END)\\s+(DO)\\s+\\w+\\b",
+          "match": "(?i)\\b(end\\s+do)\\s+\\w+\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.end.do.word.promula"
             }
           }
         },
         {
-          "match": "(?i)\\b(END)\\s+\\w+\\b",
+          "match": "(?i)\\b(end)\\s+\\w+\\b",
           "captures": {
             "1": {
-              "name": "keyword.control.promula"
+              "name": "keyword.control.end.word.promula"
             }
           }
         },
         {
-          "match": "(?i)\\bEND\\b",
+          "match": "(?i)\\b(end)\\b",
           "name": "keyword.control.end.promula"
         },
         {
-          "match": "(?i)\\bSTOP\\s+PROMULA\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(stop\\s+promula)\\b",
+          "name": "keyword.control.stop.promula"
         }
       ]
     },
     "operator": {
       "patterns": [
         {
-          "match": "(?i)\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ|IF)\\b",
+          "match": "(?i)\\b(\\*|\\+|-|/|=|>|<|gt|lt|ge|le|eq|if|into|ne)\\b",
           "name": "keyword.operator.promula"
         }
       ]
@@ -387,16 +455,8 @@
     "function": {
       "patterns": [
         {
-          "match": "(?i)\\b(READ|WRITE|CLEAR|COMPARE|OPEN|SELECT|EXP|LN|SIN|ARCSIN|COS|ARCCOS|TAN|ARCTAN|SQRT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
-          "name": "support.function.promula"
-        }
-      ]
-    },
-    "function-call": {
-      "patterns": [
-        {
-          "match": "\\b[a-zA-Z_]\\w*\\s*\\(\\s*(?:[^()]|(?R))*\\s*\\)",
-          "name": "entity.name.function.promula"
+          "match": "(?i)\\b(read|write|clear|compare|open|select|exp|ln|sin|arcsin|cos|arccos|tan|arctan|sqrt|sum|xmax|xmin|floor|round|ifix|random|sort|descending|ascending|using|copy)\\b",
+          "name": "support.function.builtin.promula"
         }
       ]
     },
@@ -417,63 +477,15 @@
       "name": "invalid.error.promula",
       "match": "(?i)\\b\\w+\\b"
     },
-    "select-type-construct": {
-      "comment": "TODO modify to work for promula",
-      "name": "meta.block.select.type.promula",
-      "begin": "(?i)\\b(select\\s*type)\\b",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control.selecttype.promula"
-        }
-      },
-      "end": "(?i)\\b(end\\s*select)\\b",
-      "endCaptures": {
-        "1": {
-          "name": "keyword.control.endselect.promula"
-        }
-      },
+    "function-call": {
       "patterns": [
         {
-          "include": "#parentheses"
-        },
-        {
-          "begin": "(?i)\\b(?:(class)|(type))\\b",
-          "beginCaptures": {
+          "match": "\\b([a-zA-Z_]\\w*)\\(\\s*.*?\\s*\\)",
+          "captures": {
             "1": {
-              "name": "keyword.control.class.promula"
-            },
-            "2": {
-              "name": "keyword.control.type.promula"
+              "name": "entity.name.selector.promula"
             }
-          },
-          "end": "(?i)(?=[;!\\n])",
-          "patterns": [
-            {
-              "match": "(?i)\\G\\s*\\b(default)\\b",
-              "captures": {
-                "1": {
-                  "name": "keyword.control.default.promula"
-                }
-              }
-            },
-            {
-              "match": "(?i)\\G\\s*\\b(is)\\b",
-              "captures": {
-                "1": {
-                  "name": "keyword.control.is.promula"
-                }
-              }
-            },
-            {
-              "include": "#parentheses"
-            },
-            {
-              "include": "#invalid-word"
-            }
-          ]
-        },
-        {
-          "include": "$base"
+          }
         }
       ]
     }

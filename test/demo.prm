@@ -4,7 +4,6 @@ Open Segment "demo2.xeq"
 Read Segment demo2,Do(Compile)
 
 Open Segment "demo3.Log",Status=New
-Define Segment demo3
 
 DEFINE PROGRAM "A Demo Program"
 
@@ -21,6 +20,7 @@ DEFINE PROGRAM "A Demo Program"
     mn(month)      "Month Names"                        TYPE=STRING(12)
     acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
   END VARIABLE
+
   DEFINE FILE
     tf TYPE=TEXT "A Text File"
   END FILE
@@ -107,7 +107,6 @@ DEFINE PROGRAM "A Demo Program"
     ELSE taxes GT 0.50
       WRITE ("The value of taxes should be less than 0.5")
     END IF
-
   END PROCEDURE profits
 
   DEFINE FILE
@@ -479,11 +478,11 @@ WRITE x
 
   DEFINE PROCEDURE DYNAM1
     ** Begin Initial Section
-    WRITE CENTER("Initial Section. Time=",TIME)
+    WRITE CENTER ("Initial Section. Time=",TIME)
     POPT=100000
     ** End Initial Section / Begin Rate Section
     RATE (BRTYR=BRTV, MRTYR=MRTV)
-    WRITE CENTER(/"Rate Section. Time=",TIME)
+    WRITE CENTER (/"Rate Section. Time=",TIME)
     DRGV = DRG(TIME)
     BTHS = POPT * BR * BRTV
     MGNTS = POPT * MR * MRTV
@@ -558,6 +557,7 @@ WRITE x
   DEFINE VARIABLE
     fname "File Name" TYPE=STRING(15)
   END VARIABLE
+
   DO DIRECTORY "*.fil" INTO fname
     WRITE fname
   END DO DIRECTORY
@@ -589,8 +589,8 @@ WRITE x
     READ val
     ans = 100/val
     DO IF ERROR 538
-    WRITE ("Please enter a nonzero value.") * Error 538 is caused by an arithmetic overflow or underflow.
-    READ val
+      WRITE ("Please enter a nonzero value.") * Error 538 is caused by an arithmetic overflow or underflow.
+      READ val
     END IF ERROR
     WRITE ("The answer is ",ans:-8:3)
   END PROCEDURE chkval
@@ -599,7 +599,7 @@ WRITE x
     WRITE "Please enter the value."
     READ val
     DO IF ESCAPE
-    WRITE ("There is no escape!")
+      WRITE ("There is no escape!")
     END IF ESCAPE
     WRITE ("The value is ",val:-8:3)
   END PROCEDURE noesc
@@ -609,9 +609,9 @@ WRITE x
     READ lmt
     SELECT mn IF mv GT lmt
     DO IF NULL
-    WRITE("There are no months with value greater than"lmt)
-    WRITE("Try again.")
-    null
+      WRITE("There are no months with value greater than"lmt)
+      WRITE("Try again.")
+      null
     END IF NULL
     WRITE mv:40
   END PROCEDURE null
@@ -621,10 +621,10 @@ WRITE x
     "Press ALT-P to save ",/.
     ":Atd-D to see difference")
     DO IF KEYPRESS(ALTP)
-    prt
+      prt
     END
     DO IF KEYPRESS(ALTD)
-    dif
+      dif
     END
   END
 
@@ -805,6 +805,7 @@ WRITE x
   DEFINE FILE
     af TYPE=ARRAY
   END
+
   OPEN af "filea.dba" STATUS=OLD
   COPY af IMAGE
 
