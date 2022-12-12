@@ -280,7 +280,7 @@
     "operator": {
       "patterns": [
         {
-          "match": "(?i)\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ)\\b",
+          "match": "(?i)\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ|IF)\\b",
           "name": "keyword.operator.promula"
         }
       ]
