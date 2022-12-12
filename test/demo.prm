@@ -131,16 +131,24 @@ DEFINE PROGRAM "A Demo Program"
     WRITE CLEAR(0)
   END PROCEDURE start
 
-  DEFINE FILE
-    tf TYPE=TEXT "A Text File"
-  END FILE
+  Open Segment "AreaSales.Log", Status=New
+  Define Segment AreaSales
 
-  OPEN tf "expns.dat" STATUS=NEW
-  DO mons
-    WRITE tf((exps)(expns(mons,expns))
-  END mons
-  WRITE tf(aincom/aincom/abalns)
-  CLEAR tf
+    DEFINE FILE
+      tf TYPE=TEXT "A Text File"
+    END FILE
+
+    OPEN tf "expns.dat" STATUS=NEW
+    DO mons
+      WRITE tf((exps)(expns(mons,expns))
+    END mons
+    WRITE tf(aincom/aincom/abalns)
+    CLEAR tf
+
+  End Segment AreaSales
+
+  Open Segment "AreaSalesSeg.Log"
+  Read Segment AreaSalesSeg,Do(DTARUN)
 
   DEFINE PROCEDURE recurs
     SELECT pickmenu(choice)
