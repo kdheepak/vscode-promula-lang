@@ -4,4 +4,4 @@ End Define Variable
 
 Define Procedure foobar
 test
-End Define Procedure foobar
+End Procedure foobar
