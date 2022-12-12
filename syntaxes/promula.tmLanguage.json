@@ -243,8 +243,18 @@
           }
         },
         {
-          "match": "(?i)\\bEND\\s+DO\\s+\\w+\\b",
-          "name": "keyword.control.promula"
+          "match": "(?i)\\b(END)\\s+(DO)\\s+(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "keyword.control.promula"
+            },
+            "3": {
+              "name": "entity.name.selector.promula"
+            }
+          }
         },
         {
           "match": "(?i)\\b(END)\\s+(\\w+)\\b",
