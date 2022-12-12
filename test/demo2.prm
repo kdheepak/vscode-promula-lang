@@ -1,3 +1,7 @@
 Define Variable
 ZZZ(Year)
 End Define Variable
+
+Define Procedure foobar
+test
+End Define Procedure foobar
