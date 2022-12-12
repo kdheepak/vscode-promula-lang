@@ -146,6 +146,9 @@ DEFINE PROGRAM "A Demo Program"
     DO mons
       WRITE tf((exps)(expns(mons,expns))
     END mons
+    DO mons
+      WRITE tf((exps)(expns(mons,expns))
+    END DO mons
     WRITE tf(aincom/aincom/abalns)
     CLEAR tf
 

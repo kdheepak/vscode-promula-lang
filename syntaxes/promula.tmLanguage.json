@@ -11,6 +11,9 @@
       "name": "constant.language.promula"
     },
     {
+      "include": "function-call"
+    },
+    {
       "include": "#numeric-constant"
     },
     {
@@ -72,13 +75,25 @@
     "open-segment": {
       "patterns": [
         {
-          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b.*\\bSTATUS=\\w+\\b",
+          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b(.*)\\b(STATUS)\\s*(=)\\s*(\\w+)\\b",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
             },
             "2": {
               "name": "storage.type.promula"
+            },
+            "3": {
+              "name": "string.quoted.double"
+            },
+            "4": {
+              "name": "storage.type.promula"
+            },
+            "5": {
+              "name": "keyword.operator.promula"
+            },
+            "6": {
+              "name": "entity.name.promula"
             }
           },
           "patterns": [
@@ -88,7 +103,7 @@
           ]
         },
         {
-          "match": "(?i)\\b(READ)\\s+(SEGMENT)\\s+(\\w)+(?:\\s*[,]\\s*([dD][oO])\\((\\w+)\\))?$",
+          "match": "(?i)\\b(READ)\\s+(SEGMENT)\\s+([\\w\\d]+)(?:\\s*[,]\\s*([dD][oO])\\((\\w+)\\))?$",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
@@ -113,13 +128,16 @@
           ]
         },
         {
-          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b.*$",
+          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b(.*)$",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
             },
             "2": {
               "name": "storage.type.promula"
+            },
+            "3": {
+              "name": "string.quoted.double"
             }
           },
           "patterns": [
@@ -287,38 +305,29 @@
           "name": "keyword.control.promula"
         },
         {
-          "match": "(?i)\\b(DO)\\s+(\\w+)\\b",
+          "match": "(?i)\\b(DO)\\s+\\w+\\b",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "entity.name.selector.promula"
             }
           }
         },
         {
-          "match": "(?i)\\b(END)\\s+(DO)\\s+(\\w+)\\b",
+          "match": "(?i)\\b(END)\\s+(DO)\\s+\\w+\\b",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
             },
             "2": {
               "name": "keyword.control.promula"
-            },
-            "3": {
-              "name": "entity.name.selector.promula"
             }
           }
         },
         {
-          "match": "(?i)\\b(END)\\s+(\\w+)\\b",
+          "match": "(?i)\\b(END)\\s+\\w+\\b",
           "captures": {
             "1": {
               "name": "keyword.control.promula"
-            },
-            "2": {
-              "name": "entity.name.selector.promula"
             }
           }
         },
@@ -343,8 +352,16 @@
     "function": {
       "patterns": [
         {
-          "match": "(?i)\\b(READ|WRITE|CLEAR|OPEN|SELECT|EXP|LN|SIN|ARCSIN|COS|ARCCOS|TAN|ARCTAN|SQRT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
+          "match": "(?i)\\b(READ|WRITE|CLEAR|COMPARE|OPEN|SELECT|EXP|LN|SIN|ARCSIN|COS|ARCCOS|TAN|ARCTAN|SQRT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
           "name": "support.function.promula"
+        }
+      ]
+    },
+    "function-call": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_]\\w*\\s*\\(\\s*(?:[^()]|(?R))*\\s*\\)",
+          "name": "entity.name.function"
         }
       ]
     }
