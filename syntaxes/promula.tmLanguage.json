@@ -416,6 +416,66 @@
     "invalid-word": {
       "name": "invalid.error.promula",
       "match": "(?i)\\b\\w+\\b"
+    },
+    "select-type-construct": {
+      "comment": "TODO modify to work for promula",
+      "name": "meta.block.select.type.promula",
+      "begin": "(?i)\\b(select\\s*type)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.selecttype.promula"
+        }
+      },
+      "end": "(?i)\\b(end\\s*select)\\b",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.endselect.promula"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#parentheses"
+        },
+        {
+          "begin": "(?i)\\b(?:(class)|(type))\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.class.promula"
+            },
+            "2": {
+              "name": "keyword.control.type.promula"
+            }
+          },
+          "end": "(?i)(?=[;!\\n])",
+          "patterns": [
+            {
+              "match": "(?i)\\G\\s*\\b(default)\\b",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.default.promula"
+                }
+              }
+            },
+            {
+              "match": "(?i)\\G\\s*\\b(is)\\b",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.is.promula"
+                }
+              }
+            },
+            {
+              "include": "#parentheses"
+            },
+            {
+              "include": "#invalid-word"
+            }
+          ]
+        },
+        {
+          "include": "$base"
+        }
+      ]
     }
   },
   "scopeName": "source.promula"
