@@ -86,6 +86,47 @@
               "include": "#string"
             }
           ]
+        },
+        {
+          "match": "(?i)\\b(READ)\\s+(SEGMENT)\\s+(\\w)+(?:\\s*[,]\\s*([dD][oO])\\((\\w+)\\))?$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "storage.type.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            },
+            "4": {
+              "name": "keyword.control.promula"
+            },
+            "5": {
+              "name": "entity.name.function.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#string"
+            }
+          ]
+        },
+        {
+          "match": "(?i)\\b(OPEN)\\s+(SEGMENT)\\b.*$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "storage.type.promula"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#string"
+            }
+          ]
         }
       ]
     },

@@ -1,4 +1,8 @@
 OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
+
+Open Segment "demo2.xeq"
+Read Segment demo2,Do(Compile)
+
 DEFINE PROGRAM "A Demo Program"
 
   * this is a comment
