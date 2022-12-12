@@ -20,11 +20,7 @@
           "promula"
         ],
         "extensions": [
-          ".prm",
-          ".src",
-          ".txt",
-          ".txp",
-          ".txo"
+          ".prm"
         ],
         "configuration": "./language-configuration.json"
       }
