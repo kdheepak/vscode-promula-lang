@@ -29,10 +29,10 @@
       "include": "#open-file"
     },
     {
-      "include": "#keyword"
+      "include": "#function"
     },
     {
-      "include": "#function"
+      "include": "#keyword"
     },
     {
       "include": "#operator"
@@ -278,7 +278,7 @@
     "function": {
       "patterns": [
         {
-          "match": "(?i)\\b(READ|WRITE|CLEAR|OPEN|SELECT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
+          "match": "(?i)\\b(READ|WRITE|CLEAR|OPEN|SELECT|EXP|LN|SIN|ARCSIN|COS|ARCCOS|TAN|ARCTAN|SQRT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
           "name": "support.function.promula"
         }
       ]
