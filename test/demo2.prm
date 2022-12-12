@@ -5,3 +5,7 @@ End define Variable
 Define Procedure foobar
 test
 End Procedure foobar
+
+Do If (Foo(something) NE NonExist) AND (Foo(something) ne PreCalc))
+    test
+End Do If Foo
