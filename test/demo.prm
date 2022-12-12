@@ -3,6 +3,9 @@ OPEN SEGMENT    "DEMO.XEQ"      STATUS=NEW
 Open Segment "demo2.xeq"
 Read Segment demo2,Do(Compile)
 
+Open Segment "demo3.Log",Status=New
+Define Segment demo3
+
 DEFINE PROGRAM "A Demo Program"
 
   * this is a comment
@@ -18,7 +21,6 @@ DEFINE PROGRAM "A Demo Program"
     mn(month)      "Month Names"                        TYPE=STRING(12)
     acn(acnt)      "Profit and Loss Account Names"       TYPE=STRING(12)
   END VARIABLE
-
   DEFINE FILE
     tf TYPE=TEXT "A Text File"
   END FILE
