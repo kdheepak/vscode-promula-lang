@@ -25,6 +25,13 @@
     ["\"", "\""],
     ["'", "'"]
   ],
+  "folding": {
+    "offSide": false,
+    "markers": {
+      "start": "^\\s*[dD][eE][fF][iI][nN][eE]\\s+(\\w+)\\b|^\\s*[dD][oO]\\s+(\\w+)\\b",
+      "end": "^\\s*[eE][nN][dD]\\s+[dD][eE][fF][iI][nN][eE]\\s+(\\1)\\b|^\\s*[eE][nN][dD]\\s+[dD][oO]\\s+(\\1)\\b"
+    }
+  },
   "indentationRules": {
     "increaseIndentPattern": "^\\s*[dD][eE][fF][iI][nN][eE]\\s+(\\w+)\\b|^\\s*[dD][oO]\\s+(\\w+)\\b",
     "decreaseIndentPattern": "^\\s*[eE][nN][dD]\\s+[dD][eE][fF][iI][nN][eE]\\s+(\\1)\\b|^\\s*[eE][nN][dD]\\s+[dD][oO]\\s+(\\1)\\b"
