@@ -237,18 +237,53 @@
       }
     },
     "end-procedure": {
-      "match": "\\b(END\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
-      "captures": {
-        "1": {
-          "name": "keyword.control.promula"
+      "patterns": [
+        {
+          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(PROCEDURE)\\s+(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "keyword.control.promula"
+            },
+            "3": {
+              "name": "storage.type.function.promula"
+            },
+            "4": {
+              "name": "entity.name.function.promula"
+            }
+          }
         },
-        "2": {
-          "name": "storage.type.function.promula"
+        {
+          "match": "\\b(END\\b)\\s+(PROCEDURE)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "storage.type.function.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          }
         },
-        "3": {
-          "name": "entity.name.function.promula"
+        {
+          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "keyword.control.promula"
+            },
+            "3": {
+              "name": "entity.name.function.promula"
+            }
+          }
         }
-      }
+      ]
     },
     "keyword": {
       "patterns": [
