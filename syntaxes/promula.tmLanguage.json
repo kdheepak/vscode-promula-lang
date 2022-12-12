@@ -137,6 +137,20 @@
           }
         },
         {
+          "match": "(?i)\\b(END)\\s+(DEFINE)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "keyword.control.promula"
+            },
+            "3": {
+              "name": "storage.type.promula"
+            }
+          }
+        },
+        {
           "match": "(?i)\\b(END)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
           "captures": {
             "1": {
