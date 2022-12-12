@@ -7,7 +7,7 @@
       "include": "#comment"
     },
     {
-      "match": "(?i)\\b(true|false|Inf|NegInf|NaN|nil)\\b",
+      "match": "(?i)\\b(true|false|Inf|NegInf|NaN|nil|NA)\\b",
       "name": "constant.language.promula"
     },
     {
@@ -111,6 +111,20 @@
     },
     "define": {
       "patterns": [
+        {
+          "match": "(?i)\\b(DEFINE)\\s+(VARIABLE)\\b\\s+(SCRATCH)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.promula"
+            },
+            "2": {
+              "name": "storage.type.promula"
+            },
+            "3": {
+              "name": "storage.type.promula"
+            }
+          }
+        },
         {
           "match": "(?i)\\b(DEFINE)\\s+(PROGRAM|MENU|TABLE|PARAMETER|FILE|PROCEDURE|RELATION|SET|VARIABLE|WINDOW)\\b",
           "captures": {
@@ -256,7 +270,7 @@
     "operator": {
       "patterns": [
         {
-          "match": "\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ)\\b",
+          "match": "(?i)\\b(\\*|\\+|-|/|=|>|<|GT|LT|GE|LE|EQ)\\b",
           "name": "keyword.operator.promula"
         }
       ]
@@ -264,7 +278,7 @@
     "function": {
       "patterns": [
         {
-          "match": "\\b(READ|WRITE|CLEAR|OPEN|SELECT|SUM|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
+          "match": "(?i)\\b(READ|WRITE|CLEAR|OPEN|SELECT|SUM|XMAX|XMIN|FLOOR|ROUND|IFIX|RANDOM|SORT|DESCENDING|ASCENDING|USING|COPY)\\b",
           "name": "support.function.promula"
         }
       ]
