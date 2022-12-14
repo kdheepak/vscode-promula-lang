@@ -432,16 +432,12 @@
           "name": "keyword.control.break.promula"
         },
         {
-          "match": "(?i)\\b(end\\s+if)\\b",
-          "name": "keyword.control.end.if.promula"
+          "match": "(?i)\\b(end\\s+do\\s+if)\\b",
+          "name": "keyword.control.end.do.if.promula"
         },
         {
-          "match": "(?i)\\b(do)\\s+\\w+\\b",
-          "captures": {
-            "1": {
-              "name": "keyword.control.do.word.promula"
-            }
-          }
+          "match": "(?i)\\b(end\\s+if)\\b",
+          "name": "keyword.control.end.if.promula"
         },
         {
           "match": "(?i)\\b(end\\s+do)\\s+\\w+\\b",
@@ -456,6 +452,14 @@
           "captures": {
             "1": {
               "name": "keyword.control.end.word.promula"
+            }
+          }
+        },
+        {
+          "match": "(?i)\\b(do)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.do.word.promula"
             }
           }
         },

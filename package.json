@@ -3,7 +3,7 @@
   "displayName": "PROMULA",
   "description": "Great Migrations PROMULA Application Development System ADS",
   "repository": "https://github.com/kdheepak/vscode-promula-lang",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "publisher": "kdheepak",
   "engines": {
     "vscode": "^1.73.0"
