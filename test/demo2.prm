@@ -1,3 +1,6 @@
+
+Define Segment Foo2
+
 Define Variable
 ZZZ(Year)
 End define Variable
@@ -10,4 +13,4 @@ Do If (Foo(something) NE NonExist) AND (Foo(something) ne PreCalc))
     test
 End Do If Foo
 
-End Segment Foo, Do(Bar)
+End Segment Foo2, Do(Bar)

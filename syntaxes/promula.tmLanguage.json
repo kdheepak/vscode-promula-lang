@@ -146,31 +146,6 @@
               "name": "entity.name.function.promula"
             }
           }
-        },
-        {
-          "match": "(?i)\\b(end)\\s+(segment)\\s+([\\w\\d]+)(?:\\s*[,]\\s*(do)\\((\\w+)\\))?$",
-          "captures": {
-            "1": {
-              "name": "support.function.builtin.promula"
-            },
-            "2": {
-              "name": "storage.type.segment.promula"
-            },
-            "3": {
-              "name": "entity.name.function.promula"
-            },
-            "4": {
-              "name": "keyword.control.promula"
-            },
-            "5": {
-              "name": "entity.name.function.promula"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#string"
-            }
-          ]
         }
       ]
     },
